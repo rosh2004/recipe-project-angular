@@ -5,6 +5,8 @@ import { BehaviorSubject, Subject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { User } from "./user.model";
 import { environment } from "src/environments/environment";
+import { Store } from "@ngrx/store";
+import * as fromApp from '../store/app.reducer'
 
 export interface AuthResponseData {
   email: string;
@@ -21,7 +23,7 @@ export interface AuthResponseData {
 export class AuthService {
   tokenExpirationTimer: any;
   user = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) { }
   signup(email: string, password: string) {
     let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey;
     let payload = {
