@@ -7,9 +7,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
-import { authReducer } from './auth/store/auth.reducer';
+import { EffectsModule } from '@ngrx/effects'
 import * as fromApp from './store/app.reducer'
+import { AuthEffects } from './auth/store/auth.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from 'src/environments/environment';
+import { StoreRouterConnectingModule } from '@ngrx/router-store'
+import { RecipesEffects } from './recipes/store/recipe.effects';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,9 @@ import * as fromApp from './store/app.reducer'
     HttpClientModule,
     SharedModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthEffects, RecipesEffects]),
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
