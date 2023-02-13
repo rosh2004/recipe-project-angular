@@ -21,7 +21,7 @@ import { RecipesEffects } from './recipes/store/recipe.effects';
     HeaderComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
