@@ -114,7 +114,7 @@ export class AuthEffects {
         }
       }
       ))
-  })
+  }, {dispatch: false})
 
 
   authLogout = createEffect(() => {
